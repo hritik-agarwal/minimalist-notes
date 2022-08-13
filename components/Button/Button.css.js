@@ -5,8 +5,6 @@ export const styles = StyleSheet.create({
   container: {
     maxWidth: '100%',
     height: hp(50),
-    // borderWidth: 1,
-    padding: wp(8),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
@@ -16,5 +14,6 @@ export const styles = StyleSheet.create({
     fontSize: 20,
     color: 'white',
     fontWeight: 'bold',
+    padding: wp(8),
   },
 });

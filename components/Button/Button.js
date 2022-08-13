@@ -3,10 +3,10 @@ import React from 'react';
 import {styles} from './Button.css';
 
 const Button = props => {
-  const {title, onPress, disabled} = props;
+  const {title, onPress, disabled, style} = props;
   return (
     <TouchableOpacity
-      style={styles.container}
+      style={[styles.container, style]}
       activeOpacity={0.6}
       disabled={disabled}
       onPress={onPress}>

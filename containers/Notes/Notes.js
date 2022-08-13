@@ -1,10 +1,10 @@
 import {View, Text, StyleSheet, ScrollView} from 'react-native';
 import React from 'react';
 import Note from '../../components/Note/Note';
-import notes from './tempData';
 import {styles} from './Notes.css';
 
-const Notes = () => {
+const Notes = props => {
+  const {notes} = props;
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollview}>
