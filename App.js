@@ -24,7 +24,11 @@ const App: () => Node = () => {
         initialRouteName="Homepage"
         screenOptions={{headerShown: false}}>
         <Stack.Screen name="Homepage" component={Homepage} />
-        <Stack.Screen name="NoteScreen" component={NoteScreen} />
+        <Stack.Screen
+          name="NoteScreen"
+          component={NoteScreen}
+          options={{animation: 'none'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

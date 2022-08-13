@@ -5,6 +5,10 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+  header: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
   createNewNoteButton: {
     width: wp('100%'),
     position: 'absolute',

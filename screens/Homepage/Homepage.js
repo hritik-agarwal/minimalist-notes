@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text} from 'react-native';
+import {View, Text, Image} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import Notes from '../../containers/Notes/Notes';
 import Button from '../../components/Button/Button';
 import {styles} from './Homepage.css';
 import EmptyPage from '../../components/EmptyPage/EmptyPage';
 import notes from '../../containers/Notes/tempData';
+import {wp, hp} from '../../utils/dimension';
 
 const Homepage = props => {
   const {navigation} = props;
@@ -21,6 +22,29 @@ const Homepage = props => {
 
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <Button
+          styleContainer={{backgroundColor: 'transparent', height: hp(40)}}
+          styleText={{color: 'black'}}
+          title={
+            <Image
+              style={{width: wp(20), height: wp(20)}}
+              source={require('./../../src/images/icons/menu.png')}
+            />
+          }
+        />
+        <Text
+          style={{
+            width: wp('80%'),
+            textAlign: 'center',
+            fontSize: 20,
+            color: 'brown',
+            fontWeight: '300',
+            letterSpacing: 1,
+          }}>
+          Minimalist Note
+        </Text>
+      </View>
       {notes.length === 0 ? (
         <View style={styles.emptyPage}>
           <EmptyPage title="It's empty in here! :) " />
