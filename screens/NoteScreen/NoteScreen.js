@@ -88,7 +88,7 @@ const NoteScreen = props => {
         {currentId !== -1 && (
           <Button
             title="Delete"
-            style={{backgroundColor: 'red'}}
+            styleContainer={{backgroundColor: 'red'}}
             onPress={() => setShowConfirmDeletePopup(true)}
           />
         )}
@@ -101,6 +101,35 @@ const NoteScreen = props => {
         value={currentTitle}
         onChangeText={handleTitleChange}
       />
+
+      {/* Text/Note decoration options */}
+      <View style={styles.optionButtonsContainer}>
+        <Button
+          styleContainer={{backgroundColor: 'white', height: hp(40)}}
+          styleText={{color: 'black'}}
+          title="A"
+        />
+        <Button
+          styleContainer={{backgroundColor: 'white', height: hp(40)}}
+          styleText={{color: 'black'}}
+          title="A"
+        />
+        <Button
+          styleContainer={{backgroundColor: 'white', height: hp(40)}}
+          styleText={{color: 'black'}}
+          title="A"
+        />
+        <Button
+          styleContainer={{backgroundColor: 'white', height: hp(40)}}
+          styleText={{color: 'black'}}
+          title="A"
+        />
+        <Button
+          styleContainer={{backgroundColor: 'white', height: hp(40)}}
+          styleText={{color: 'black'}}
+          title="A"
+        />
+      </View>
 
       {/* Content Text Input */}
       <TextInput

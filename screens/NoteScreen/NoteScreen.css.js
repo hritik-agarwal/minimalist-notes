@@ -44,4 +44,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: 'blue',
   },
+  optionButtonsContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    backgroundColor: 'white',
+  },
 });
