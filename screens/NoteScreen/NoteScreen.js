@@ -12,6 +12,7 @@ import {styles} from './NoteScreen.css';
 import {hp, wp} from '../../utils/dimension';
 import Button from '../../components/Button/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
 
 const NOTES_KEY = 'notes';
 
@@ -21,6 +22,7 @@ const NoteScreen = props => {
   const {id, title, content} = route.params;
 
   // state variables
+  const richText = useRef();
   const isThereChanges = useRef(false);
   const [currentId, setCurrentId] = useState(id);
   const [noteData, setNoteData] = useState(
@@ -61,6 +63,8 @@ const NoteScreen = props => {
           notes[index] = newNote;
         }
         setNoteData(newNote);
+        setCurrentContent(newNote.content);
+        setCurrentTitle(newNote.title);
         updateNotes(notes);
       })
       .catch(error => console.log(error));
@@ -168,6 +172,7 @@ const NoteScreen = props => {
         <Button
           title="Save"
           onPress={saveChanges}
+          styleText={{color: 'black'}}
           styleContainer={{backgroundColor: 'transparent'}}
           disabled={disableSaveButton}
         />
@@ -194,81 +199,46 @@ const NoteScreen = props => {
         onChangeText={handleTitleChange}
       />
 
-      {/* Text/Note decoration options */}
-      <View style={styles.optionButtonsContainer}>
-        <Button
-          styleContainer={{backgroundColor: 'white', height: hp(40)}}
-          styleText={{color: 'black'}}
-          title={
-            <Image
-              style={{width: wp(20), height: wp(20)}}
-              source={require('./../../src/images/icons/textSize.png')}
-            />
-          }
-        />
-        <Button
-          styleContainer={{backgroundColor: 'white', height: hp(40)}}
-          styleText={{color: 'black'}}
-          title={
-            <Image
-              style={{width: wp(20), height: wp(20)}}
-              source={require('./../../src/images/icons/textColor.png')}
-            />
-          }
-        />
-        <Button
-          styleContainer={{backgroundColor: 'white', height: hp(40)}}
-          styleText={{color: 'black'}}
-          title={
-            <Image
-              style={{width: wp(20), height: wp(20)}}
-              source={require('./../../src/images/icons/textBold.png')}
-            />
-          }
-        />
-        <Button
-          styleContainer={{backgroundColor: 'white', height: hp(40)}}
-          styleText={{color: 'black'}}
-          title={
-            <Image
-              style={{width: wp(20), height: wp(20)}}
-              source={require('./../../src/images/icons/textItalic.png')}
-            />
-          }
-        />
-        <Button
-          styleContainer={{backgroundColor: 'white', height: hp(40)}}
-          styleText={{color: 'black'}}
-          title={
-            <Image
-              style={{width: wp(20), height: wp(20)}}
-              source={require('./../../src/images/icons/textUnderline.png')}
-            />
-          }
-        />
-        <Button
-          styleContainer={{backgroundColor: 'white', height: hp(40)}}
-          styleText={{color: 'black'}}
-          title={
-            <Image
-              style={{width: wp(20), height: wp(20)}}
-              source={require('./../../src/images/icons/textHighlight.png')}
-            />
-          }
-        />
-      </View>
-
       {/* Content Text Input */}
-      <TextInput
-        style={styles.content}
-        placeholder="Type your thoughts here..."
-        textAlignVertical="top"
-        multiline
-        value={currentContent}
-        onChangeText={handleContentChange}
+      <RichToolbar
+        actions={[
+          actions.heading1,
+          actions.heading2,
+          actions.heading3,
+          actions.setBold,
+          actions.setItalic,
+          actions.setUnderline,
+          actions.setStrikethrough,
+          actions.insertBulletsList,
+          actions.insertOrderedList,
+          // actions.checkboxList,
+          // actions.insertImage,
+          // actions.insertVideo,
+          actions.undo,
+          actions.redo,
+        ]}
+        iconMap={{
+          [actions.heading1]: ({tintColor}) => <Text>H1</Text>,
+          [actions.heading2]: ({tintColor}) => <Text>H2</Text>,
+          [actions.heading3]: ({tintColor}) => <Text>H3</Text>,
+        }}
+        editor={richText}
+        selectedIconTint="blue"
       />
 
-      {/* Save / Discard Changes Modal */}
+      {/* Content Editor */}
+      <RichEditor
+        editorStyle={{}}
+        ref={richText}
+        useContainer={false}
+        placeholder="Type your thoughts here..."
+        initialContentHTML={currentContent}
+        onChange={content => {
+          setCurrentContent(content);
+        }}
+      />
+
+      {/* Save and Close Popup */}
       <Modal
         visible={showSaveAndClosePopup}
         onRequestClose={() => setShowSaveAndClosePopup(false)}

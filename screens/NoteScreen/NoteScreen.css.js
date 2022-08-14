@@ -4,6 +4,7 @@ import {hp, wp} from '../../utils/dimension';
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   title: {
     borderWidth: 1,

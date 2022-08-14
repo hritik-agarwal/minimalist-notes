@@ -11,7 +11,7 @@ const Button = props => {
       disabled={disabled}
       onPress={onPress}>
       <Text
-        style={[styles.title, disabled ? {color: 'grey'} : null, styleText]}>
+        style={[styles.title, styleText, disabled ? {color: 'grey'} : null]}>
         {title}
       </Text>
     </TouchableOpacity>
