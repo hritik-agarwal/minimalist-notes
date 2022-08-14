@@ -3,16 +3,14 @@ import {hp, wp} from '../../utils/dimension';
 
 export const styles = StyleSheet.create({
   container: {
-    maxWidth: '100%',
     height: hp(50),
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: 'blue',
   },
   title: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     fontWeight: 'bold',
     padding: wp(8),
   },

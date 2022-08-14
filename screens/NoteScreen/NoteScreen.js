@@ -170,7 +170,7 @@ const NoteScreen = props => {
           onPress={goBackHandler}
         />
         <Button
-          title="Save"
+          title="save"
           onPress={saveChanges}
           styleText={{color: 'black'}}
           styleContainer={{backgroundColor: 'transparent'}}
@@ -233,8 +233,8 @@ const NoteScreen = props => {
         useContainer={false}
         placeholder="Type your thoughts here..."
         initialContentHTML={currentContent}
-        onChange={content => {
-          setCurrentContent(content);
+        onChange={newcontent => {
+          setCurrentContent(newcontent);
         }}
       />
 

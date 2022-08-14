@@ -10,11 +10,9 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   createNewNoteButton: {
-    width: wp('100%'),
     position: 'absolute',
     bottom: 0,
-  },
-  emptyPage: {
-    // marginBottom: hp(50),
+    right: 0,
+    margin: hp(10),
   },
 });

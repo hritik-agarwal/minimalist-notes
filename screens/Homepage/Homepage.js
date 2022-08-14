@@ -67,7 +67,14 @@ const Homepage = props => {
       )}
       <View style={styles.createNewNoteButton}>
         <Button
-          title="Create New Note"
+          title="+"
+          styleContainer={{
+            width: 50,
+            height: 50,
+            borderRadius: 25,
+            backgroundColor: 'grey',
+          }}
+          styleText={{fontSize: 25, color: 'white'}}
           onPress={() => navigation.navigate('NoteScreen', {id: -1})}
         />
       </View>

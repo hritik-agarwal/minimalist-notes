@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     borderWidth: 1,
-    padding: wp(15),
+    padding: wp(5),
     fontSize: 20,
     borderColor: 'grey',
   },
