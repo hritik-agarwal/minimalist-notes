@@ -155,16 +155,32 @@ const NoteScreen = props => {
     <View style={styles.container}>
       {/* Header Buttons - back, save, delete */}
       <View style={styles.headerButtons}>
-        <Button title="Back" onPress={goBackHandler} />
+        <Button
+          title={
+            <Image
+              style={{width: wp(20), height: wp(20)}}
+              source={require('./../../src/images/icons/back.png')}
+            />
+          }
+          styleContainer={{backgroundColor: 'transparent'}}
+          onPress={goBackHandler}
+        />
         <Button
           title="Save"
           onPress={saveChanges}
+          styleContainer={{backgroundColor: 'transparent'}}
           disabled={disableSaveButton}
         />
         {currentId !== -1 && (
           <Button
-            title="Delete"
-            styleContainer={{backgroundColor: 'red'}}
+            title={
+              <Image
+                style={{width: wp(20), height: wp(20)}}
+                source={require('./../../src/images/icons/delete.png')}
+              />
+            }
+            styleContainer={{backgroundColor: 'transparent'}}
+            styleText={{color: 'black'}}
             onPress={() => setShowConfirmDeletePopup(true)}
           />
         )}
