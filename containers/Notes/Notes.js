@@ -8,13 +8,14 @@ const Notes = props => {
   return (
     <View style={styles.container}>
       <ScrollView style={styles.scrollview}>
-        {notes.map((item, index) => {
-          return (
-            <View key={index}>
-              <Note id={item.id} title={item.title} content={item.content} />
-            </View>
-          );
-        })}
+        {notes &&
+          notes.map((item, index) => {
+            return (
+              <View key={index}>
+                <Note id={item.id} title={item.title} content={item.content} />
+              </View>
+            );
+          })}
       </ScrollView>
     </View>
   );

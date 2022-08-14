@@ -36,29 +36,21 @@ const Homepage = props => {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Button
-          styleContainer={{backgroundColor: 'transparent', height: hp(40)}}
-          styleText={{color: 'black'}}
-          title={
-            <Image
-              style={{width: wp(20), height: wp(20)}}
-              source={require('./../../src/images/icons/menu.png')}
-            />
-          }
-        />
         <Text
           style={{
-            width: wp('80%'),
+            width: wp('100%'),
             textAlign: 'center',
-            fontSize: 20,
+            fontSize: 25,
             color: 'brown',
             fontWeight: '300',
             letterSpacing: 1,
+            borderBottomWidth: 1,
+            paddingVertical: hp(10),
           }}>
           Minimalist Note
         </Text>
       </View>
-      {notes.length === 0 ? (
+      {!notes || notes.length === 0 ? (
         <View style={styles.emptyPage}>
           <EmptyPage title="It's empty in here! :) " />
         </View>
