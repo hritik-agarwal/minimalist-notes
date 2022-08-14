@@ -41,6 +41,10 @@ const NoteScreen = props => {
 
   // Function to save changes / save a new note
   const saveChanges = () => {
+    if (currentTitle === '') {
+      alert('Title can not be empty');
+      return -1;
+    }
     getNotes()
       .then(notes => {
         const index = notes.findIndex(item => item.id === currentId);
@@ -76,7 +80,7 @@ const NoteScreen = props => {
 
   // Function triggered when clicked on save changes in save/discard changes modal
   const saveChangesModal = () => {
-    saveChanges();
+    if (saveChanges() === -1) return;
     setTimeout(() => goBack(), 10);
   };
 
@@ -134,9 +138,6 @@ const NoteScreen = props => {
   const updateNotes = async newdata => {
     try {
       await AsyncStorage.setItem(NOTES_KEY, JSON.stringify(newdata));
-      getNotes().then(data => {
-        console.log(data);
-      });
     } catch (e) {
       return e;
     }
