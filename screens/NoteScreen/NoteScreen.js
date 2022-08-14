@@ -9,23 +9,28 @@ import {
 } from 'react-native';
 import React, {useEffect, useState, useRef} from 'react';
 import {styles} from './NoteScreen.css';
-import notes from '../../containers/Notes/tempData';
 import {hp, wp} from '../../utils/dimension';
 import Button from '../../components/Button/Button';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const NOTES_KEY = 'notes';
 
 const NoteScreen = props => {
-  // state variables
+  // param variables
   const {navigation, route} = props;
-  const {id} = route.params;
-  const [noteData, setNoteData] = useState(
-    id != -1
-      ? notes[notes.findIndex(item => item.id === id)]
-      : {title: '', content: ''},
-  );
-  const [currentId, setCurrentId] = useState(id);
-  const [currentTitle, setCurrentTitle] = useState(noteData.title);
-  const [currentContent, setCurrentContent] = useState(noteData.content);
+  const {id, title, content} = route.params;
+
+  // state variables
   const isThereChanges = useRef(false);
+  const [currentId, setCurrentId] = useState(id);
+  const [noteData, setNoteData] = useState(
+    id === -1 ? {title: '', content: ''} : {title, content},
+  );
+  const [currentTitle, setCurrentTitle] = useState(id === -1 ? '' : title);
+  const [currentContent, setCurrentContent] = useState(
+    id === -1 ? '' : content,
+  );
+  const [disableSaveButton, setDisableSaveButton] = useState(false);
   const [showSaveAndClosePopup, setShowSaveAndClosePopup] = useState(false);
   const [showConfirmDeletePopup, setShowConfirmDeletePopup] = useState(false);
 
@@ -36,33 +41,43 @@ const NoteScreen = props => {
 
   // Function to save changes / save a new note
   const saveChanges = () => {
-    const index = notes.findIndex(item => item.id === currentId);
-    const currLen = notes.length;
-    const newNote = {
-      id: index === -1 ? currLen + 1 : currentId,
-      title: currentTitle,
-      content: currentContent,
-    };
-    if (index === -1) {
-      notes.push(newNote);
-      setCurrentId(currLen + 1);
-    } else {
-      notes[index] = newNote;
-    }
-    setNoteData(newNote);
+    getNotes()
+      .then(notes => {
+        const index = notes.findIndex(item => item.id === currentId);
+        const currLen = notes.length;
+        const newNote = {
+          id: index === -1 ? currLen + 1 : currentId,
+          title: currentTitle,
+          content: currentContent,
+        };
+        if (index === -1) {
+          notes.push(newNote);
+          setCurrentId(currLen + 1);
+        } else {
+          notes[index] = newNote;
+        }
+        setNoteData(newNote);
+        updateNotes(notes);
+      })
+      .catch(error => console.log(error));
   };
 
   // Function to delete a note
   const deleteNote = () => {
-    const index = notes.findIndex(item => item.id === currentId);
-    if (index !== -1) notes.splice(index, 1);
-    goBack();
+    getNotes()
+      .then(notes => {
+        const index = notes.findIndex(item => item.id === currentId);
+        if (index !== -1) notes.splice(index, 1);
+        updateNotes(notes);
+        goBack();
+      })
+      .catch(error => console.log(error));
   };
 
   // Function triggered when clicked on save changes in save/discard changes modal
   const saveChangesModal = () => {
     saveChanges();
-    goBack();
+    setTimeout(() => goBack(), 10);
   };
 
   // Function triggered when clicked on back button
@@ -84,7 +99,11 @@ const NoteScreen = props => {
       noteData.content !== currentContent
     ) {
       isThereChanges.current = true;
-    } else isThereChanges.current = false;
+      setDisableSaveButton(false);
+    } else {
+      isThereChanges.current = false;
+      setDisableSaveButton(true);
+    }
   }, [currentTitle, currentContent, noteData]);
 
   // Function to handle hardware back button press
@@ -97,6 +116,33 @@ const NoteScreen = props => {
     return true;
   };
 
+  // Function to get data from async-storage
+  const getNotes = async () => {
+    try {
+      let notes = await AsyncStorage.getItem(NOTES_KEY);
+      if (!notes) {
+        updateNotes([]);
+        return getNotes();
+      }
+      return JSON.parse(notes);
+    } catch (e) {
+      return e;
+    }
+  };
+
+  // Function to update data to async-storage
+  const updateNotes = async newdata => {
+    try {
+      await AsyncStorage.setItem(NOTES_KEY, JSON.stringify(newdata));
+      getNotes().then(data => {
+        console.log(data);
+      });
+    } catch (e) {
+      return e;
+    }
+  };
+
+  // Function to trigger when component mounts
   useEffect(() => {
     BackHandler.addEventListener('hardwareBackPress', backButtonHandler);
     return () => {
@@ -112,7 +158,7 @@ const NoteScreen = props => {
         <Button
           title="Save"
           onPress={saveChanges}
-          disabled={!isThereChanges.current}
+          disabled={disableSaveButton}
         />
         {currentId !== -1 && (
           <Button

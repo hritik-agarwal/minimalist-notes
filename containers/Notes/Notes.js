@@ -11,7 +11,7 @@ const Notes = props => {
         {notes.map((item, index) => {
           return (
             <View key={index}>
-              <Note title={item.title} id={item.id} />
+              <Note id={item.id} title={item.title} content={item.content} />
             </View>
           );
         })}

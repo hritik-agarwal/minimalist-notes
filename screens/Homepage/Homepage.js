@@ -5,18 +5,31 @@ import Notes from '../../containers/Notes/Notes';
 import Button from '../../components/Button/Button';
 import {styles} from './Homepage.css';
 import EmptyPage from '../../components/EmptyPage/EmptyPage';
-import notes from '../../containers/Notes/tempData';
 import {wp, hp} from '../../utils/dimension';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const NOTES_KEY = 'notes';
 
 const Homepage = props => {
+  const [notes, setNotes] = useState([]);
   const {navigation} = props;
-
-  // Rerender the page whenever homepage is in focus
-  const [refresh, setRefresh] = useState(true);
   const isFocused = useIsFocused();
+
+  // Function to get data from async-storage
+  const getNotes = async () => {
+    try {
+      const notesdata = await AsyncStorage.getItem(NOTES_KEY);
+      return JSON.parse(notesdata);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   useEffect(() => {
     if (isFocused) {
-      setRefresh(!refresh);
+      getNotes().then(notes => {
+        setNotes(notes);
+      });
     }
   }, [isFocused]);
 

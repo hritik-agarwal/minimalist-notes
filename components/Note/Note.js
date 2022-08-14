@@ -10,13 +10,13 @@ import {useNavigation} from '@react-navigation/native';
 import {styles} from './Note.css';
 
 const Note = props => {
-  const {id, title} = props;
+  const {id, title, content} = props;
   const navigation = useNavigation();
   return (
     <TouchableOpacity
       style={styles.container}
       onPress={() => {
-        navigation.navigate('NoteScreen', {id});
+        navigation.navigate('NoteScreen', {id, title, content});
       }}>
       <Text style={styles.title}>{title}</Text>
     </TouchableOpacity>
