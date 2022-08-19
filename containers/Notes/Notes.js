@@ -7,7 +7,7 @@ const Notes = props => {
   const {notes} = props;
   return (
     <View style={styles.container}>
-      <ScrollView style={styles.scrollview}>
+      <ScrollView>
         {notes &&
           notes.map((item, index) => {
             return (

@@ -10,6 +10,7 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 20,
-    paddingLeft: wp(20),
+    width: wp('80%'),
+    color: 'black',
   },
 });

@@ -6,7 +6,4 @@ export const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-  scrollview: {
-    marginBottom: hp(50),
-  },
 });
