@@ -3,14 +3,14 @@ import {View, Text, Image} from 'react-native';
 import {useIsFocused} from '@react-navigation/native';
 import Notes from '../../containers/Notes/Notes';
 import Button from '../../components/Button/Button';
-import {styles} from './Homepage.css';
+import {styles} from './NotesHomepage.css';
 import EmptyPage from '../../components/EmptyPage/EmptyPage';
 import {wp, hp} from '../../utils/dimension';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NOTES_KEY = 'notes';
 
-const Homepage = props => {
+const NotesHomepage = props => {
   const [notes, setNotes] = useState([]);
   const {navigation} = props;
   const isFocused = useIsFocused();
@@ -35,21 +35,6 @@ const Homepage = props => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text
-          style={{
-            width: wp('100%'),
-            textAlign: 'center',
-            fontSize: 25,
-            color: 'brown',
-            fontWeight: '300',
-            letterSpacing: 1,
-            borderBottomWidth: 1,
-            paddingVertical: hp(10),
-          }}>
-          Minimalist Note
-        </Text>
-      </View>
       {!notes || notes.length === 0 ? (
         <View style={styles.emptyPage}>
           <EmptyPage title="It's empty in here! :) " />
@@ -74,4 +59,4 @@ const Homepage = props => {
   );
 };
 
-export default Homepage;
+export default NotesHomepage;
