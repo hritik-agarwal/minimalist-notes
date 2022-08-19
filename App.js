@@ -9,7 +9,7 @@
 
 import React from 'react';
 import type {Node} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, Image, View} from 'react-native';
 import NotesHomepage from './screens/NotesHomepage/NotesHomepage';
 import TodosHomepage from './screens/TodosHomepage/TodosHomepage';
 import NoteScreen from './screens/NoteScreen/NoteScreen';
@@ -20,20 +20,56 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 
+const HabitsHomepage = () => <Text>Habits</Text>;
+const CalendarHomepage = () => <Text>Calendar</Text>;
+
+export const icons = {
+  Notes: {
+    uri: require('./src/images/icons/notes.png'),
+  },
+  Todos: {
+    uri: require('./src/images/icons/todos.png'),
+  },
+  Habits: {
+    uri: require('./src/images/icons/habits.png'),
+  },
+  Calendar: {
+    uri: require('./src/images/icons/calendar.png'),
+  },
+};
+
 const Home = () => {
   return (
     <Tab.Navigator
-      screenOptions={{
-        tabBarLabelPosition: 'beside-icon',
+      screenOptions={({route}) => ({
         tabBarLabelStyle: {
           fontWeight: '700',
           fontSize: 15,
         },
-        tabBarIconStyle: {display: 'none'},
         headerShown: false,
-      }}>
-      <Tab.Screen name="Notes" component={NotesHomepage} />
+        tabBarIcon: ({focused, color, size}) => {
+          return (
+            <Image
+              source={icons[`${route.name}`].uri}
+              style={{
+                width: size / 1.1,
+                height: size / 1.1,
+                textAlign: 'center',
+              }}
+            />
+          );
+        },
+        tabBarActiveTintColor: 'tomato',
+        tabBarInactiveTintColor: 'gray',
+      })}>
+      <Tab.Screen
+        options={{style: {borderWidth: 1}}}
+        name="Notes"
+        component={NotesHomepage}
+      />
       <Tab.Screen name="Todos" component={TodosHomepage} />
+      <Tab.Screen name="Habits" component={HabitsHomepage} />
+      <Tab.Screen name="Calendar" component={CalendarHomepage} />
     </Tab.Navigator>
   );
 };
