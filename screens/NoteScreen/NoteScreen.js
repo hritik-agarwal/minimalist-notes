@@ -13,6 +13,7 @@ import {hp, wp} from '../../utils/dimension';
 import Button from '../../components/Button/Button';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {actions, RichEditor, RichToolbar} from 'react-native-pell-rich-editor';
+import uuid from 'react-native-uuid';
 
 const NOTES_KEY = 'notes';
 
@@ -52,13 +53,13 @@ const NoteScreen = props => {
         const index = notes.findIndex(item => item.id === currentId);
         const currLen = notes.length;
         const newNote = {
-          id: index === -1 ? currLen + 1 : currentId,
+          id: index === -1 ? uuid.v4() : currentId,
           title: currentTitle,
           content: currentContent,
         };
         if (index === -1) {
           notes.push(newNote);
-          setCurrentId(currLen + 1);
+          setCurrentId(uuid.v4());
         } else {
           notes[index] = newNote;
         }

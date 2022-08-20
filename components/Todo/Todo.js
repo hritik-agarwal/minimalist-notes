@@ -5,29 +5,37 @@ import {styles} from './Todo.css';
 import {wp} from '../../utils/dimension';
 
 const Todo = props => {
-  const {id, title, completed, deleteTodo} = props;
-  const [toggleCheckBox, setToggleCheckBox] = useState(completed);
+  const {id, title, completed, deleteTodo, saveTodo} = props;
+  const [newTitle, setNewTitle] = useState(title);
 
   return (
     <View style={styles.container}>
       <View style={{width: '10%'}}>
         <CheckBox
-          value={toggleCheckBox}
-          onValueChange={newValue => setToggleCheckBox(newValue)}
+          value={completed}
+          onValueChange={newValue => {
+            saveTodo(id, title, newValue);
+          }}
         />
       </View>
       <TouchableOpacity>
         <TextInput
+          value={newTitle}
+          onChangeText={text => setNewTitle(text)}
+          onBlur={() => {
+            if (title !== newTitle) {
+              saveTodo(id, newTitle, completed);
+            }
+          }}
           style={[
             styles.title,
-            (toggleCheckBox && {
+            (completed && {
               textDecorationLine: 'line-through',
               color: 'grey',
               fontWeight: '100',
             }: null),
-          ]}>
-          {title}
-        </TextInput>
+          ]}
+        />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => deleteTodo(id)}>
         <Text

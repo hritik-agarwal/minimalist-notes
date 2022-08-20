@@ -6,40 +6,83 @@ import {styles} from './TodosHomepage.css';
 import EmptyPage from '../../components/EmptyPage/EmptyPage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Todos from './../../containers/Todos/Todos';
-import tempData from './../../containers/Todos/tempData';
+import uuid from 'react-native-uuid';
 
 const TODOS_KEY = 'todos';
 
 const TodosHomepage = props => {
-  // const [todos, setTodos] = useState(tempData);
+  const [todos, setTodos] = useState([]);
   const [showAddTodoModal, setShowAddTodoModal] = useState(false);
   const [newTodo, setNewTodo] = useState('');
   const [refresh, setRefresh] = useState(false);
-  let todos = tempData;
   const isFocused = useIsFocused();
 
-  // // Function to get data from async-storage
-  // const getTodos = async () => {
-  //   try {
-  //     const todosdata = await AsyncStorage.getItem(TODOS_KEY);
-  //     return JSON.parse(todosdata);
-  //   } catch (e) {
-  //     console.log(e);
-  //   }
-  // };
+  // Function to get data from async-storage
+  const getTodos = async () => {
+    try {
+      let todos = await AsyncStorage.getItem(TODOS_KEY);
+      if (!todos) {
+        updateTodos([]);
+        return getTodos();
+      }
+      return JSON.parse(todos);
+    } catch (e) {
+      return e;
+    }
+  };
 
-  // useEffect(() => {
-  //   if (isFocused) {
-  //     getTodos().then(todos => {
-  //       setTodos(todos);
-  //     });
-  //   }
-  // }, [isFocused]);
+  // Function to update data to async-storage
+  const updateTodos = async newdata => {
+    try {
+      await AsyncStorage.setItem(TODOS_KEY, JSON.stringify(newdata));
+    } catch (e) {
+      return e;
+    }
+  };
 
-  const addNewTodo = text => setNewTodo(text);
-  const deleteTodo = index => {
-    todos.splice(index, 1);
-    setRefresh(refresh => !refresh);
+  useEffect(() => {
+    if (isFocused) {
+      getTodos()
+        .then(todos => {
+          setTodos(todos);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  }, [isFocused]);
+
+  const saveTodo = (todoId, todoTitle, todoCompleted) => {
+    getTodos()
+      .then(todos => {
+        const index = todos.findIndex(item => item.id === todoId);
+        const currLen = todos.length;
+        const todo = {
+          id: todoId,
+          title: todoTitle,
+          completed: todoCompleted,
+        };
+        if (index === -1) {
+          todos.push(todo);
+        } else {
+          todos[index] = todo;
+        }
+        setTodos(todos);
+        updateTodos(todos);
+      })
+      .catch(error => console.log(error));
+  };
+
+  // Function to delete a todo
+  const deleteTodo = todoId => {
+    getTodos()
+      .then(todos => {
+        const index = todos.findIndex(item => item.id === todoId);
+        if (index !== -1) todos.splice(index, 1);
+        updateTodos(todos);
+        setTodos(todos);
+      })
+      .catch(error => console.log(error));
   };
 
   const closeAddTodoModal = () => {
@@ -54,7 +97,7 @@ const TodosHomepage = props => {
           <EmptyPage title="It's empty in here! :) " />
         </View>
       ) : (
-        <Todos todos={todos} deleteTodo={deleteTodo} />
+        <Todos todos={todos} deleteTodo={deleteTodo} saveTodo={saveTodo} />
       )}
       <View style={styles.createNewTodoButton}>
         <Button
@@ -85,13 +128,17 @@ const TodosHomepage = props => {
           <Text style={styles.modalText}>Add New Todo</Text>
           <TextInput
             value={newTodo}
-            onChangeText={addNewTodo}
+            onChangeText={text => setNewTodo(text)}
             autoFocus={true}
             style={{borderWidth: 1}}></TextInput>
           <Button
             title="Add"
             onPress={() => {
-              todos.push({title: newTodo, completed: false});
+              if (newTodo === '') {
+                alert("Todo can't be empty");
+                return;
+              }
+              saveTodo(uuid.v4(), newTodo, false);
               closeAddTodoModal();
             }}
           />

@@ -4,19 +4,20 @@ import Todo from '../../components/Todo/Todo';
 import {styles} from './Todos.css';
 
 const Todos = props => {
-  const {todos, deleteTodo} = props;
+  const {todos, deleteTodo, saveTodo} = props;
   return (
     <View style={styles.container}>
       <ScrollView>
         {todos &&
           todos.map((item, index) => {
             return (
-              <View key={index}>
+              <View key={item.id}>
                 <Todo
-                  id={index}
+                  id={item.id}
                   title={item.title}
                   completed={item.completed}
                   deleteTodo={deleteTodo}
+                  saveTodo={saveTodo}
                 />
               </View>
             );

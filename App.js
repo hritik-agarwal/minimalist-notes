@@ -55,11 +55,12 @@ const Home = () => {
                 width: size / 1.1,
                 height: size / 1.1,
                 textAlign: 'center',
+                opacity: focused ? 1 : 0.5,
               }}
             />
           );
         },
-        tabBarActiveTintColor: 'tomato',
+        tabBarActiveTintColor: 'black',
         tabBarInactiveTintColor: 'gray',
       })}>
       <Tab.Screen
