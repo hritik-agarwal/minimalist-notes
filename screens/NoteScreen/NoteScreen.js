@@ -59,7 +59,7 @@ const NoteScreen = props => {
         };
         if (index === -1) {
           notes.push(newNote);
-          setCurrentId(uuid.v4());
+          setCurrentId(newNote.id);
         } else {
           notes[index] = newNote;
         }

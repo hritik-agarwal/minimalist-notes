@@ -41,6 +41,7 @@ const Home = () => {
   return (
     <Tab.Navigator
       screenOptions={({route}) => ({
+        lazy: false,
         tabBarLabelStyle: {
           fontWeight: '700',
           fontSize: 15,

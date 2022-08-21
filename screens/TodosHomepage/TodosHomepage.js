@@ -92,6 +92,16 @@ const TodosHomepage = props => {
 
   return (
     <View style={styles.container}>
+      <Text
+        style={{
+          textAlign: 'center',
+          fontSize: 20,
+          color: '#0099ff',
+          padding: 10,
+          borderBottomWidth: 1,
+        }}>
+        Minimalist Productivity
+      </Text>
       {!todos || todos.length === 0 ? (
         <View style={styles.emptyPage}>
           <EmptyPage title="It's empty in here! :) " />
