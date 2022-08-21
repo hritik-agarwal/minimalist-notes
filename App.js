@@ -12,15 +12,15 @@ import type {Node} from 'react';
 import {StyleSheet, Text, Image, View} from 'react-native';
 import NotesHomepage from './screens/NotesHomepage/NotesHomepage';
 import TodosHomepage from './screens/TodosHomepage/TodosHomepage';
+import HabitsHomepage from './screens/HabitsHomepage/HabitsHomepage';
 import NoteScreen from './screens/NoteScreen/NoteScreen';
+import HabitScreen from './screens/HabitScreen/HabitScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
-
-const HabitsHomepage = () => <Text>Habits</Text>;
 const CalendarHomepage = () => <Text>Calendar</Text>;
 
 export const icons = {
@@ -52,8 +52,8 @@ const Home = () => {
             <Image
               source={icons[`${route.name}`].uri}
               style={{
-                width: size / 1.1,
-                height: size / 1.1,
+                width: size / 1.2,
+                height: size / 1.2,
                 textAlign: 'center',
                 opacity: focused ? 1 : 0.5,
               }}
@@ -70,7 +70,7 @@ const Home = () => {
       />
       <Tab.Screen name="Todos" component={TodosHomepage} />
       <Tab.Screen name="Habits" component={HabitsHomepage} />
-      <Tab.Screen name="Calendar" component={CalendarHomepage} />
+      {/* <Tab.Screen name="Calendar" component={CalendarHomepage} /> */}
     </Tab.Navigator>
   );
 };
@@ -86,6 +86,11 @@ const App: () => Node = () => {
         <Stack.Screen
           name="NoteScreen"
           component={NoteScreen}
+          options={{animation: 'none'}}
+        />
+        <Stack.Screen
+          name="HabitScreen"
+          component={HabitScreen}
           options={{animation: 'none'}}
         />
       </Stack.Navigator>

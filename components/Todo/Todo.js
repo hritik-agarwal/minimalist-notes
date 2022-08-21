@@ -20,6 +20,7 @@ const Todo = props => {
       </View>
       <TouchableOpacity>
         <TextInput
+          multiline
           value={newTitle}
           onChangeText={text => setNewTitle(text)}
           onBlur={() => {

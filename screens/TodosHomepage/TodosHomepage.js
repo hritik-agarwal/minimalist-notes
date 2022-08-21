@@ -127,6 +127,7 @@ const TodosHomepage = props => {
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Add New Todo</Text>
           <TextInput
+            multiline
             value={newTodo}
             onChangeText={text => setNewTodo(text)}
             autoFocus={true}
