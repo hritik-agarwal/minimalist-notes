@@ -68,6 +68,7 @@ const HabitsHomepage = props => {
         }
         setHabits(habits);
         updateHabits(habits);
+        setRefresh(!refresh);
       })
       .catch(error => console.log(error));
   };

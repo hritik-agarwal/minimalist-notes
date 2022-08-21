@@ -14,7 +14,6 @@ import NotesHomepage from './screens/NotesHomepage/NotesHomepage';
 import TodosHomepage from './screens/TodosHomepage/TodosHomepage';
 import HabitsHomepage from './screens/HabitsHomepage/HabitsHomepage';
 import NoteScreen from './screens/NoteScreen/NoteScreen';
-import HabitScreen from './screens/HabitScreen/HabitScreen';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -86,11 +85,6 @@ const App: () => Node = () => {
         <Stack.Screen
           name="NoteScreen"
           component={NoteScreen}
-          options={{animation: 'none'}}
-        />
-        <Stack.Screen
-          name="HabitScreen"
-          component={HabitScreen}
           options={{animation: 'none'}}
         />
       </Stack.Navigator>
