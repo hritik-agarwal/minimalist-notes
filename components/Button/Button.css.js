@@ -13,5 +13,6 @@ export const styles = StyleSheet.create({
     color: 'black',
     fontWeight: 'bold',
     padding: wp(8),
+    color: 'black',
   },
 });

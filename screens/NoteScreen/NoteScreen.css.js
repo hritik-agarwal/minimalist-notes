@@ -11,6 +11,7 @@ export const styles = StyleSheet.create({
     padding: wp(5),
     fontSize: 20,
     borderColor: 'grey',
+    color: 'black',
   },
   content: {
     borderWidth: 1,
@@ -38,6 +39,7 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginBottom: hp(10),
+    color: 'black',
   },
   headerButtons: {
     flexDirection: 'row',

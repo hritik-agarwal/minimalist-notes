@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     color: 'black',
     width: wp('70%'),
   },
@@ -30,5 +30,6 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginBottom: hp(10),
+    color: 'black',
   },
 });

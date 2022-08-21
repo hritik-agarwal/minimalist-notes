@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 15,
     width: wp('80%'),
     color: 'black',
   },

@@ -50,7 +50,7 @@ const Habit = props => {
       <TouchableOpacity onLongPress={() => setEditMode(true)}>
         {editMode === true ? (
           <TextInput
-            maxLength={25}
+            maxLength={50}
             autoFocus={true}
             style={[styles.title, {paddingLeft: 0}]}
             value={newTitle}
@@ -98,7 +98,7 @@ const Habit = props => {
             />
           </View>
         ) : (
-          <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color: 'black'}}>
             {datesMarked.length}/{target}
           </Text>
         )}

@@ -44,6 +44,7 @@ const Todo = props => {
             fontSize: 15,
             width: wp('10%'),
             textAlign: 'center',
+            color: 'black',
           }}>
           X
         </Text>

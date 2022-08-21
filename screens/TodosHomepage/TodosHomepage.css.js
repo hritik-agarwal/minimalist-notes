@@ -32,5 +32,6 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center',
     marginBottom: hp(10),
+    color: 'black',
   },
 });

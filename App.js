@@ -74,7 +74,6 @@ const Home = () => {
     </Tab.Navigator>
   );
 };
-const TodoList = () => <Text>TodoList</Text>;
 
 const App: () => Node = () => {
   return (

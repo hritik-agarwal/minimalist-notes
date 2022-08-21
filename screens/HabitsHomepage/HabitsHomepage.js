@@ -145,7 +145,7 @@ const HabitsHomepage = props => {
             value={newHabit}
             onChangeText={text => setNewHabit(text)}
             autoFocus={true}
-            style={{borderWidth: 1}}></TextInput>
+            style={{borderWidth: 1, color: 'black'}}></TextInput>
           <Button
             title="Add"
             onPress={() => {
