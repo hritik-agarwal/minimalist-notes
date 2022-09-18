@@ -10,10 +10,12 @@
 import React from 'react';
 import type {Node} from 'react';
 import {StyleSheet, Text, Image, View} from 'react-native';
+import NoteScreen from './screens/NoteScreen/NoteScreen';
+import ExpenseScreen from './screens/ExpenseScreen/ExpenseScreen';
 import NotesHomepage from './screens/NotesHomepage/NotesHomepage';
 import TodosHomepage from './screens/TodosHomepage/TodosHomepage';
 import HabitsHomepage from './screens/HabitsHomepage/HabitsHomepage';
-import NoteScreen from './screens/NoteScreen/NoteScreen';
+import ExpensesHomepage from './screens/ExpensesHomepage/ExpensesHomepage';
 import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
@@ -34,6 +36,9 @@ export const icons = {
   },
   Calendar: {
     uri: require('./src/images/icons/calendar.png'),
+  },
+  Expenses: {
+    uri: require('./src/images/icons/expenses.png'),
   },
 };
 
@@ -70,6 +75,7 @@ const Home = () => {
       />
       <Tab.Screen name="Todos" component={TodosHomepage} />
       <Tab.Screen name="Habits" component={HabitsHomepage} />
+      <Tab.Screen name="Expenses" component={ExpensesHomepage} />
       {/* <Tab.Screen name="Calendar" component={CalendarHomepage} /> */}
     </Tab.Navigator>
   );
@@ -85,6 +91,11 @@ const App: () => Node = () => {
         <Stack.Screen
           name="NoteScreen"
           component={NoteScreen}
+          options={{animation: 'none'}}
+        />
+        <Stack.Screen
+          name="ExpenseScreen"
+          component={ExpenseScreen}
           options={{animation: 'none'}}
         />
       </Stack.Navigator>
