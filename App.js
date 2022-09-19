@@ -9,7 +9,7 @@
 
 import React from 'react';
 import type {Node} from 'react';
-import {StyleSheet, Text, Image, View} from 'react-native';
+import {StyleSheet, Text, Image, View, LogBox} from 'react-native';
 import NoteScreen from './screens/NoteScreen/NoteScreen';
 import ExpenseScreen from './screens/ExpenseScreen/ExpenseScreen';
 import NotesHomepage from './screens/NotesHomepage/NotesHomepage';
@@ -20,6 +20,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 
+LogBox.ignoreAllLogs(true);
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
 const CalendarHomepage = () => <Text>Calendar</Text>;

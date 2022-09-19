@@ -120,7 +120,7 @@ const ExpensesHomepage = props => {
             width: 50,
             height: 50,
             borderRadius: 25,
-            backgroundColor: 'grey',
+            backgroundColor: '#0099ff',
           }}
           styleText={{fontSize: 25, color: 'white'}}
           onPress={() => {

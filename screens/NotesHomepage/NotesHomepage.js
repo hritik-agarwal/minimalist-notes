@@ -47,7 +47,7 @@ const NotesHomepage = props => {
       </Text>
       {!notes || notes.length === 0 ? (
         <View style={styles.emptyPage}>
-          <EmptyPage title="It's empty in here! :) " />
+          <EmptyPage title="Your own personal diary! :) " />
         </View>
       ) : (
         <Notes notes={notes} />
@@ -59,7 +59,7 @@ const NotesHomepage = props => {
             width: 50,
             height: 50,
             borderRadius: 25,
-            backgroundColor: 'grey',
+            backgroundColor: '#0099ff',
           }}
           styleText={{fontSize: 25, color: 'white'}}
           onPress={() => navigation.navigate('NoteScreen', {id: -1})}
