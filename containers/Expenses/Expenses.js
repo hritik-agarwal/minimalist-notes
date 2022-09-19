@@ -18,7 +18,7 @@ const Expenses = props => {
   const now = new Date();
   const isFocused = useIsFocused();
   const {expenses, deleteExpense, saveExpense} = props;
-  const [expenseBudget, setExpenseBudget] = useState(20000);
+  const [expenseBudget, setExpenseBudget] = useState(25000);
   const [expenseAmount, setExpenseAmount] = useState(0);
   const [openFromDate, setOpenFromDate] = useState(false);
   const [openToDate, setOpenToDate] = useState(false);
@@ -68,7 +68,7 @@ const Expenses = props => {
     try {
       let budget = await AsyncStorage.getItem('expenseBudget');
       if (!budget) {
-        updateExpenseBudget({});
+        updateExpenseBudget({expenseBudget: 25000, expenseAmount: 0});
         return getExpenseBudget();
       }
       return JSON.parse(budget);
@@ -86,7 +86,23 @@ const Expenses = props => {
   };
 
   useEffect(() => {
-    if (isFocused) {
+    if (
+      new Date(now).toLocaleDateString() ===
+      new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString()
+    ) {
+      let total = 0;
+      expenses.forEach(item => {
+        item.expenseData.forEach(data => {
+          if (
+            new Date(item.date).toLocaleDateString() ===
+            new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString()
+          ) {
+            total += data.amount;
+          }
+        });
+      });
+      saveExpenseBudget(expenseBudget, total);
+    } else if (isFocused) {
       getExpenseBudget()
         .then(budget => {
           setExpenseAmount(budget.expenseAmount);

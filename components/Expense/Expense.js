@@ -67,6 +67,20 @@ const Expense = props => {
     setTotalExpense(amountspent);
   }, [isFocused, fromDate, toDate]);
 
+  const findMonthExpense = () => {
+    let amountspent = 0;
+    const now = new Date();
+    expenseData.forEach(item => {
+      const from = new Date(now.getFullYear(), now.getMonth(), 1);
+      const curr = new Date(item.date);
+      const to = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+      if (curr >= from && curr <= to) {
+        amountspent += item.amount;
+      }
+    });
+    return amountspent;
+  };
+
   return (
     <View style={styles.container}>
       <TouchableOpacity
@@ -157,7 +171,14 @@ const Expense = props => {
         />
         <View style={styles.modalView}>
           <Text style={styles.modalText}>Confirm Delete?</Text>
-          <Button title="Yes" onPress={() => deleteExpense(id)} />
+          <Button
+            title="Yes"
+            onPress={() => {
+              const monthExpense = findMonthExpense();
+              saveExpenseBudget(expenseBudget, expenseAmount - monthExpense);
+              deleteExpense(id);
+            }}
+          />
           <Button title="No" onPress={() => setShowConfirmDeletePopup(false)} />
         </View>
       </Modal>
@@ -227,7 +248,7 @@ const Expense = props => {
                 ]);
                 clearState();
                 setTotalExpense(prev => parseInt(prev) + parseInt(total));
-                const curr = totalExpense;
+                const curr = expenseAmount;
                 saveExpenseBudget(expenseBudget, curr + total);
                 setExpenseAmount(curr + total);
               }}
