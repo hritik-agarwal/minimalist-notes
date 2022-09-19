@@ -56,6 +56,7 @@ export const styles = StyleSheet.create({
     marginHorizontal: wp(20),
     fontSize: 15,
     padding: 0,
+    color: 'black',
   },
   modalItemButtonContainer: {
     marginTop: hp(30),

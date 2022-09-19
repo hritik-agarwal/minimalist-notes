@@ -13,13 +13,22 @@ import {hp, wp} from '../../utils/dimension';
 import {useNavigation} from '@react-navigation/native';
 import Button from '../../components/Button/Button';
 import {useIsFocused} from '@react-navigation/native';
+import uuid from 'react-native-uuid';
 
 const Expense = props => {
   const navigation = useNavigation();
-  const {id, category, expenseData, deleteExpense, saveExpense} = props;
+  const {
+    id,
+    category,
+    expenseData,
+    deleteExpense,
+    saveExpense,
+    fromDate,
+    toDate,
+  } = props;
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
-  const [method, setMethod] = useState('');
+  const [method, setMethod] = useState('bank');
   const [newCategory, setNewTitle] = useState(category);
   const [editMode, setEditMode] = useState(false);
   const [showConfirmDeletePopup, setShowConfirmDeletePopup] = useState(false);
@@ -33,7 +42,7 @@ const Expense = props => {
   const clearState = () => {
     setTitle('');
     setAmount('');
-    setMethod('');
+    setMethod('bank');
     setShowNewExpensePopup(false);
   };
 
@@ -42,15 +51,27 @@ const Expense = props => {
   useEffect(() => {
     if (!isFocused) return;
     let amountspent = 0;
-    expenseData.forEach(item => (amountspent += item.amount));
+    expenseData.forEach(item => {
+      const from = new Date(fromDate);
+      const curr = new Date(item.date);
+      const to = new Date(toDate);
+      if (curr >= from && curr <= to) {
+        amountspent += item.amount;
+      }
+    });
     setTotalExpense(amountspent);
-  }, [isFocused]);
+  }, [isFocused, fromDate, toDate]);
 
   return (
     <View style={styles.container}>
       <TouchableOpacity
         onPress={() => {
-          navigation.navigate('ExpenseScreen', {});
+          navigation.navigate('ExpenseScreen', {
+            id,
+            category,
+            expenseData,
+            saveExpense,
+          });
         }}
         onLongPress={() => setEditMode(true)}>
         {editMode === true ? (
@@ -110,9 +131,10 @@ const Expense = props => {
         styleContainer={{
           backgroundColor: 'transparent',
           width: wp('10%'),
-          borderWidth: 1,
+          borderLeftWidth: 1,
+          backgroundColor: 'grey',
         }}
-        styleText={{color: 'black'}}
+        styleText={{color: 'white'}}
         onPress={() => setShowNewExpensePopup(true)}
       />
       <Modal
@@ -188,6 +210,7 @@ const Expense = props => {
                 saveExpense(id, newCategory, [
                   ...expenseData,
                   {
+                    id: uuid.v4(),
                     title: title,
                     amount: total,
                     method: method === '' ? 'cash' : method,

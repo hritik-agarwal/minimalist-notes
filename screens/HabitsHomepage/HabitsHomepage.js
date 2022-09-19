@@ -104,7 +104,7 @@ const HabitsHomepage = props => {
       </Text>
       {!habits || habits.length === 0 ? (
         <View style={styles.emptyPage}>
-          <EmptyPage title="It's empty in here! :) " />
+          <EmptyPage title="Build some good habits, bruh! :) " />
         </View>
       ) : (
         <Habits
@@ -120,7 +120,7 @@ const HabitsHomepage = props => {
             width: 50,
             height: 50,
             borderRadius: 25,
-            backgroundColor: 'grey',
+            backgroundColor: '#0099ff',
           }}
           styleText={{fontSize: 25, color: 'white'}}
           onPress={() => {

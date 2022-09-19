@@ -104,7 +104,7 @@ const TodosHomepage = props => {
       </Text>
       {!todos || todos.length === 0 ? (
         <View style={styles.emptyPage}>
-          <EmptyPage title="It's empty in here! :) " />
+          <EmptyPage title="Let's do some work! :) " />
         </View>
       ) : (
         <Todos todos={todos} deleteTodo={deleteTodo} saveTodo={saveTodo} />
@@ -116,7 +116,7 @@ const TodosHomepage = props => {
             width: 50,
             height: 50,
             borderRadius: 25,
-            backgroundColor: 'grey',
+            backgroundColor: '#0099ff',
           }}
           styleText={{fontSize: 25, color: 'white'}}
           onPress={() => {
