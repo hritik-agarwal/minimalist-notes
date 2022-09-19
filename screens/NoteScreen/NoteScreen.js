@@ -212,16 +212,22 @@ const NoteScreen = props => {
           actions.setStrikethrough,
           actions.insertBulletsList,
           actions.insertOrderedList,
-          // actions.checkboxList,
+          actions.checkboxList,
           // actions.insertImage,
           // actions.insertVideo,
           actions.undo,
           actions.redo,
         ]}
         iconMap={{
-          [actions.heading1]: ({tintColor}) => <Text>H1</Text>,
-          [actions.heading2]: ({tintColor}) => <Text>H2</Text>,
-          [actions.heading3]: ({tintColor}) => <Text>H3</Text>,
+          [actions.heading1]: ({tintColor}) => (
+            <Text style={{color: tintColor}}>H1</Text>
+          ),
+          [actions.heading2]: ({tintColor}) => (
+            <Text style={{color: tintColor}}>H2</Text>
+          ),
+          [actions.heading3]: ({tintColor}) => (
+            <Text style={{color: tintColor}}>H3</Text>
+          ),
         }}
         editor={richText}
         selectedIconTint="blue"
@@ -229,7 +235,9 @@ const NoteScreen = props => {
 
       {/* Content Editor */}
       <RichEditor
-        editorStyle={{}}
+        editorStyle={{
+          initialCSSText: `ol, ul {margin: 0; padding: 10px;}`,
+        }}
         ref={richText}
         useContainer={false}
         placeholder="Type your thoughts here..."
