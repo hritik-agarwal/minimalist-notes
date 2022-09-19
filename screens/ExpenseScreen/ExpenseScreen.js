@@ -7,7 +7,15 @@ import DatePicker from 'react-native-date-picker';
 import EmptyPage from '../../components/EmptyPage/EmptyPage';
 
 const ExpenseScreen = props => {
-  const {id, category, expenseData, saveExpense} = props.route.params;
+  const {
+    id,
+    category,
+    expenseData,
+    saveExpense,
+    expenseBudget,
+    expenseAmount,
+    saveExpenseBudget,
+  } = props.route.params;
   const earliestExpense = expenseData.length > 0 ? expenseData[0].date : null;
   const latestExpense =
     expenseData.length > 0 ? expenseData[expenseData.length - 1].date : null;
@@ -40,6 +48,20 @@ const ExpenseScreen = props => {
   const formatDate = date => {
     return `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`;
   };
+
+  const checkDate = date => {
+    const now = new Date();
+    if (
+      new Date(date).toLocaleDateString() >=
+        new Date(now.getFullYear(), now.getMonth(), 1).toLocaleDateString() &&
+      new Date(date).toLocaleDateString() <=
+        new Date(now.getFullYear(), now.getMonth() + 1, 0).toLocaleDateString()
+    ) {
+      return true;
+    }
+    return false;
+  };
+
   return (
     <View style={styles.container}>
       <Text
@@ -161,6 +183,12 @@ const ExpenseScreen = props => {
                               );
                               saveExpense(id, category, newExpenseData);
                               setData(newExpenseData);
+                              if (checkDate(item.date)) {
+                                saveExpenseBudget(
+                                  expenseBudget,
+                                  expenseAmount - item.amount,
+                                );
+                              }
                             }}
                           />
                         </View>

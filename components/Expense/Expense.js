@@ -25,6 +25,11 @@ const Expense = props => {
     saveExpense,
     fromDate,
     toDate,
+    expenseBudget,
+    expenseAmount,
+    setExpenseBudget,
+    setExpenseAmount,
+    saveExpenseBudget,
   } = props;
   const [title, setTitle] = useState('');
   const [amount, setAmount] = useState('');
@@ -71,6 +76,9 @@ const Expense = props => {
             category,
             expenseData,
             saveExpense,
+            expenseBudget,
+            expenseAmount,
+            saveExpenseBudget,
           });
         }}
         onLongPress={() => setEditMode(true)}>
@@ -219,6 +227,9 @@ const Expense = props => {
                 ]);
                 clearState();
                 setTotalExpense(prev => parseInt(prev) + parseInt(total));
+                const curr = totalExpense;
+                saveExpenseBudget(expenseBudget, curr + total);
+                setExpenseAmount(curr + total);
               }}
               styleContainer={styles.modalItemButton}
             />
